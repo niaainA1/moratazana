@@ -1,0 +1,111 @@
+// src/app/context/AppContext.tsx
+// Charge les produits depuis l'API Spring Boot
+
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { PaintProduct } from "../data/mockData";
+import { getProduits, toPaintProduct } from "../services/api";
+import { removeToken } from "../services/auth";
+import { useNavigate } from "react-router";
+
+interface AppContextType {
+  products: PaintProduct[];
+  updateProducts: (products: PaintProduct[]) => void;
+  selectedShop: string | null;
+  setSelectedShop: (shopId: string) => void;
+  loading: boolean;
+  error: string | null;
+  reloadProducts: () => void;
+  logout: () => void;
+}
+
+const AppContext = createContext<AppContextType | undefined>(undefined);
+
+export function AppProvider({ children }: { children: ReactNode }) {
+  const [products, setProducts] = useState<PaintProduct[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedShop, setSelectedShopState] = useState<string | null>(
+    localStorage.getItem("selectedShop")
+  );
+
+  // Charger les produits depuis l'API quand la boutique change
+  const loadProducts = async (shopId: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getProduits(shopId);
+      setProducts(data.map(toPaintProduct));
+    } catch (err: any) {
+      if (err.message === "SESSION_EXPIRED") {
+        removeToken();
+        window.location.href = "/";
+        return;
+      }
+      setError("Impossible de charger les produits.");
+      // Fallback localStorage
+      const saved = localStorage.getItem(`products_${shopId}`);
+      if (saved) setProducts(JSON.parse(saved));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedShop) {
+      loadProducts(selectedShop);
+    }
+  }, [selectedShop]);
+
+  // Sauvegarde locale comme backup offline
+  useEffect(() => {
+    if (selectedShop && products.length > 0) {
+      localStorage.setItem(`products_${selectedShop}`, JSON.stringify(products));
+    }
+  }, [products, selectedShop]);
+
+  const updateProducts = (newProducts: PaintProduct[]) => {
+    setProducts(newProducts);
+  };
+
+  const handleSetSelectedShop = (shopId: string) => {
+    setSelectedShopState(shopId);
+    localStorage.setItem("selectedShop", shopId);
+  };
+
+  const reloadProducts = () => {
+    if (selectedShop) loadProducts(selectedShop);
+  };
+
+  const logout = () => {
+    removeToken();
+    setProducts([]);
+    setSelectedShopState(null);
+    localStorage.removeItem("selectedShop");
+    window.location.href = "/";
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        products,
+        updateProducts,
+        selectedShop,
+        setSelectedShop: handleSetSelectedShop,
+        loading,
+        error,
+        reloadProducts,
+        logout,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+}
+
+export function useApp() {
+  const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error("useApp must be used within an AppProvider");
+  }
+  return context;
+}

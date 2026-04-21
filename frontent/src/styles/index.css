@@ -1,0 +1,11 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+@import './responsive.css';
+
+/* Wireframe Mode Styles */
+.wireframe-mode * {
+  background-image: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
