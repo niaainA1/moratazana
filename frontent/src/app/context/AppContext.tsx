@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { PaintProduct } from "../data/mockData";
-import { getProduits, toPaintProduct } from "../services/api";
+import { api, toPaintProduct } from "../services/api";
 import { removeToken } from "../services/auth";
 
 interface AppContextType {
