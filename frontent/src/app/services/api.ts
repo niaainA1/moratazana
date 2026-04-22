@@ -76,6 +76,20 @@ export const api = {
     return response.json();
   }
 };
+import { getProduits } from "../services/api";
+import { PaintProduct } from "../data/mockData";
+
+// Ajoute une fonction simple pour convertir
+const toPaintProduct = (data: any): PaintProduct => ({
+  id: data.id,
+  nom: data.nom,
+  prix: data.prix,
+  stock: data.stock,
+  seuilAlerte: data.seuilAlerte,
+  category: data.category,
+  description: data.description,
+  image: data.image
+});
 // Exports individuels pour compatibilité avec AppContext
 export const getProduits = api.getProduits;
 export const createProduit = api.createProduit;
