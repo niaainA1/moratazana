@@ -1,7 +1,22 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { PaintProduct } from "../data/mockData";
-import { getProduits, toPaintProduct } from "../services/api";
+import { getProduits } from "../services/api";
+import { PaintProduct } from "../data/mockData";
 import { removeToken } from "../services/auth";
+
+// Fonction utilitaire pour convertir les données de l'API au format PaintProduct
+const toPaintProduct = (data: any): PaintProduct => {
+  return {
+    id: data.id,
+    nom: data.nom,
+    prix: data.prix,
+    stock: data.stock,
+    seuilAlerte: data.seuilAlerte,
+    category: data.category,
+    description: data.description,
+    image: data.image || "/placeholder.jpg"
+  };
+};
 
 interface AppContextType {
   products: PaintProduct[];
