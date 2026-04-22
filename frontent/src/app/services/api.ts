@@ -76,11 +76,9 @@ export const api = {
     return response.json();
   }
 };
-import { getProduits } from "../services/api";
-import { PaintProduct } from "../data/mockData";
 
-// Ajoute une fonction simple pour convertir
-const toPaintProduct = (data: any): PaintProduct => ({
+// Fonction de conversion
+export const toPaintProduct = (data: any) => ({
   id: data.id,
   nom: data.nom,
   prix: data.prix,
@@ -88,9 +86,10 @@ const toPaintProduct = (data: any): PaintProduct => ({
   seuilAlerte: data.seuilAlerte,
   category: data.category,
   description: data.description,
-  image: data.image
+  image: data.image || "/placeholder.jpg"
 });
-// Exports individuels pour compatibilité avec AppContext
+
+// Exports individuels
 export const getProduits = api.getProduits;
 export const createProduit = api.createProduit;
 export const updateProduit = api.updateProduit;
@@ -99,44 +98,4 @@ export const saveSaisieSoir = api.saveSaisieSoir;
 export const getStats = api.getStats;
 export const getAlertes = api.getAlertes;
 
-// Export par défaut pour compatibilité
 export default api;
-
-export function toPaintProduct(p: ProduitAPI) {
-  return {
-    id: String(p.id),
-    name: p.name,
-    imageUrl: p.imageUrl,
-    currentStock: p.currentStock,
-    price: p.price,
-    minStock: p.minStock,
-    soldToday: 0,
-    newArrival: 0,
-  };
-}
-
-// ============================================
-// FONCTIONS DE CONVERSION ET EXPORTS
-// ============================================
-
-export const toPaintProduct = (data: any) => {
-  return {
-    id: data.id,
-    nom: data.nom,
-    prix: data.prix,
-    stock: data.stock,
-    seuilAlerte: data.seuilAlerte,
-    category: data.category,
-    description: data.description,
-    image: data.image || "/placeholder.jpg"
-  };
-};
-
-// Exports compatibilité
-export const getProduits = api.getProduits;
-export const createProduit = api.createProduit;
-export const updateProduit = api.updateProduit;
-export const deleteProduit = api.deleteProduit;
-export const saveSaisieSoir = api.saveSaisieSoir;
-export const getStats = api.getStats;
-export const getAlertes = api.getAlertes;
