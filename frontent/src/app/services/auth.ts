@@ -4,9 +4,7 @@ export const auth = {
   login: async (telephone: string, password: string) => {
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ telephone, password }),
     });
     
@@ -50,7 +48,7 @@ export const auth = {
   }
 };
 
-// Exports individuels pour compatibilité
+// Exports individuels
 export const login = auth.login;
 export const saveToken = auth.saveToken;
 export const logout = auth.logout;
@@ -59,5 +57,4 @@ export const getCurrentUser = auth.getCurrentUser;
 export const getToken = auth.getToken;
 export const isAuthenticated = auth.isAuthenticated;
 
-// Export par défaut
 export default auth;

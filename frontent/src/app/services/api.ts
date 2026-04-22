@@ -114,3 +114,29 @@ export function toPaintProduct(p: ProduitAPI) {
     newArrival: 0,
   };
 }
+
+// ============================================
+// FONCTIONS DE CONVERSION ET EXPORTS
+// ============================================
+
+export const toPaintProduct = (data: any) => {
+  return {
+    id: data.id,
+    nom: data.nom,
+    prix: data.prix,
+    stock: data.stock,
+    seuilAlerte: data.seuilAlerte,
+    category: data.category,
+    description: data.description,
+    image: data.image || "/placeholder.jpg"
+  };
+};
+
+// Exports compatibilité
+export const getProduits = api.getProduits;
+export const createProduit = api.createProduit;
+export const updateProduit = api.updateProduit;
+export const deleteProduit = api.deleteProduit;
+export const saveSaisieSoir = api.saveSaisieSoir;
+export const getStats = api.getStats;
+export const getAlertes = api.getAlertes;
