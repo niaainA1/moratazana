@@ -101,3 +101,16 @@ export const getAlertes = api.getAlertes;
 
 // Export par défaut pour compatibilité
 export default api;
+
+export function toPaintProduct(p: ProduitAPI) {
+  return {
+    id: String(p.id),
+    name: p.name,
+    imageUrl: p.imageUrl,
+    currentStock: p.currentStock,
+    price: p.price,
+    minStock: p.minStock,
+    soldToday: 0,
+    newArrival: 0,
+  };
+}
