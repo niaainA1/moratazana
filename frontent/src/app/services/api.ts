@@ -76,3 +76,14 @@ export const api = {
     return response.json();
   }
 };
+// Exports individuels pour compatibilité avec AppContext
+export const getProduits = api.getProduits;
+export const createProduit = api.createProduit;
+export const updateProduit = api.updateProduit;
+export const deleteProduit = api.deleteProduit;
+export const saveSaisieSoir = api.saveSaisieSoir;
+export const getStats = api.getStats;
+export const getAlertes = api.getAlertes;
+
+// Export par défaut pour compatibilité
+export default api;

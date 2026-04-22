@@ -47,3 +47,14 @@ export const auth = {
     return !!localStorage.getItem('token');
   }
 };
+// Exports individuels pour compatibilité
+export const login = auth.login;
+export const logout = auth.logout;
+export const removeToken = auth.logout;
+export const getCurrentUser = auth.getCurrentUser;
+export const getToken = auth.getToken;
+export const isAuthenticated = auth.isAuthenticated;
+
+// Export par défaut
+export default auth;
+
