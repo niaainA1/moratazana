@@ -54,7 +54,7 @@ public class SecurityConfig {
         // Après
 config.setAllowedOrigins(List.of(
     "http://localhost:5173",
-    "http://192.168.1.85:5173"
+    "https://moratazana.vercel.app"
 ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
