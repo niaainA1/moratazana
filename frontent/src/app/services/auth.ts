@@ -26,6 +26,11 @@ export const auth = {
     return data;
   },
 
+  saveToken: (token: string, userData: any) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(userData));
+  },
+
   logout: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -44,8 +49,10 @@ export const auth = {
     return !!localStorage.getItem('token');
   }
 };
+
 // Exports individuels pour compatibilité
 export const login = auth.login;
+export const saveToken = auth.saveToken;
 export const logout = auth.logout;
 export const removeToken = auth.logout;
 export const getCurrentUser = auth.getCurrentUser;
@@ -54,4 +61,3 @@ export const isAuthenticated = auth.isAuthenticated;
 
 // Export par défaut
 export default auth;
-
