@@ -1,5 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
-
+const BASE_URL = "https://moratazana-api.onrender.com/api";
 export const auth = {
   login: async (telephone: string, password: string) => {
     const response = await fetch(`${BASE_URL}/auth/login`, {
