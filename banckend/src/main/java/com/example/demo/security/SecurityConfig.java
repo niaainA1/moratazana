@@ -33,9 +33,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Route login publique
                 .requestMatchers("/api/auth/login").permitAll()
-                // Toutes les autres routes nécessitent un token
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -51,11 +49,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        // Après
-config.setAllowedOrigins(List.of(
-    "http://localhost:5173",
-    "https://moratazana.vercel.app"
-));
+        // ✅ ORIGINES AUTORISÉES (AJOUTÉ VERCEL)
+        config.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "https://moratazana.vercel.app",
+            "https://moratazana-niaaina1s-projects.vercel.app",
+            "https://*.vercel.app"
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
