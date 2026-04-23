@@ -1,11 +1,9 @@
 const BASE_URL = "https://moratazana-api.onrender.com/api";
+
 export const api = {
-  // Produits
   getProduits: async (shopId: number) => {
     const response = await fetch(`${BASE_URL}/produits?shopId=${shopId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
     return response.json();
   },
@@ -37,9 +35,7 @@ export const api = {
   deleteProduit: async (id: number) => {
     const response = await fetch(`${BASE_URL}/produits/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
     return response.json();
   },
@@ -56,27 +52,28 @@ export const api = {
     return response.json();
   },
 
-  // Rapports
   getStats: async (shopId: number) => {
     const response = await fetch(`${BASE_URL}/rapports/stats?shopId=${shopId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
     return response.json();
   },
 
   getAlertes: async (shopId: number) => {
     const response = await fetch(`${BASE_URL}/rapports/alertes?shopId=${shopId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
     return response.json();
   }
 };
 
-// Fonction de conversion
+export const getProduits = api.getProduits;
+export const createProduit = api.createProduit;
+export const updateProduit = api.updateProduit;
+export const deleteProduit = api.deleteProduit;
+export const saveSaisieSoir = api.saveSaisieSoir;
+export const getStats = api.getStats;
+export const getAlertes = api.getAlertes;
 export const toPaintProduct = (data: any) => ({
   id: data.id,
   nom: data.nom,
@@ -87,14 +84,5 @@ export const toPaintProduct = (data: any) => ({
   description: data.description,
   image: data.image || "/placeholder.jpg"
 });
-
-// Exports individuels
-export const getProduits = api.getProduits;
-export const createProduit = api.createProduit;
-export const updateProduit = api.updateProduit;
-export const deleteProduit = api.deleteProduit;
-export const saveSaisieSoir = api.saveSaisieSoir;
-export const getStats = api.getStats;
-export const getAlertes = api.getAlertes;
 
 export default api;

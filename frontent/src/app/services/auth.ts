@@ -1,6 +1,8 @@
 const BASE_URL = "https://moratazana-api.onrender.com/api";
+
 export const auth = {
   login: async (telephone: string, password: string) => {
+    console.log("Login URL:", `${BASE_URL}/auth/login`);
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -47,7 +49,6 @@ export const auth = {
   }
 };
 
-// Exports individuels
 export const login = auth.login;
 export const saveToken = auth.saveToken;
 export const logout = auth.logout;
